@@ -33,6 +33,8 @@ import org.apache.tuweni.bytes.Bytes32;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 public class JWTAuthOptionsFactory {
 
   private static final JwtAlgorithm DEFAULT = JwtAlgorithm.RS256;
@@ -98,8 +100,8 @@ public class JWTAuthOptionsFactory {
   private KeyPair generateRsaKeyPair() {
     final KeyPairGenerator keyGenerator;
     try {
-      keyGenerator = KeyPairGenerator.getInstance("RSA");
-      keyGenerator.initialize(2048);
+      KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+      // Note: DILITHIUM3 does not require initialize() call
     } catch (final NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
