@@ -58,6 +58,8 @@ import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 
+import org.bouncycastle.pqc.jcajce.provider.BouncyCastlePQCProvider;
+
 /**
  * Utility class to generate temporary self-signed certificates in PKCS12 format for testing
  * purposes using BouncyCastle APIs. The generated certificate supports SAN extension for multiple
@@ -132,8 +134,8 @@ public final class SelfSignedP12Certificate {
   }
 
   private static KeyPair generateKeyPair() throws GeneralSecurityException {
-    final KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-    keyPairGenerator.initialize(2048, createSecureRandom());
+    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DILITHIUM3", "BC");
+    // Note: DILITHIUM3 does not require initialize() call
     return keyPairGenerator.generateKeyPair();
   }
 
